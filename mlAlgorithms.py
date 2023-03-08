@@ -1,4 +1,5 @@
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn import metrics
@@ -18,3 +19,13 @@ def trained_KNN(X_train, X_test, Y_train, Y_test):
     metrics.ConfusionMatrixDisplay.from_estimator(gs_best, X_test, Y_test)
 
     return gs_best
+
+def trained_LogisticRegression(X_train, X_test, Y_train, Y_test):
+    lr = LogisticRegression()
+    lr.fit(X_train, Y_train)
+    yhat = lr.predict(X_test)
+
+    print(classification_report(Y_test, yhat))
+    metrics.ConfusionMatrixDisplay.from_estimator(lr, X_test, Y_test)
+
+    return lr
