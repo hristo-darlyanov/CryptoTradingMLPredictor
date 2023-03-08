@@ -10,6 +10,7 @@ def trained_KNN(X_train, X_test, Y_train, Y_test):
     gs = GridSearchCV(knn, knn_params)
     gs.fit(X_train, Y_train)
     gs_best = gs.best_estimator_
+    print(gs.best_params_)
 
     yhat = gs_best.predict(X_test)
 
