@@ -22,10 +22,15 @@ def trained_KNN(X_train, X_test, Y_train, Y_test):
 
 def trained_LogisticRegression(X_train, X_test, Y_train, Y_test):
     lr = LogisticRegression()
-    lr.fit(X_train, Y_train)
-    yhat = lr.predict(X_test)
+    lr_params = {'C': np.arange(0.1, 1, 0.1), 'solver' : ['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga']}
+    gs = GridSearchCV(lr, lr_params)
+    gs.fit(X_train, Y_train)
+    gs_best = gs.best_estimator_
+    print(gs.best_params_)
+
+    yhat = gs_best.predict(X_test)
 
     print(classification_report(Y_test, yhat))
-    metrics.ConfusionMatrixDisplay.from_estimator(lr, X_test, Y_test)
+    metrics.ConfusionMatrixDisplay.from_estimator(gs_best, X_test, Y_test)
 
-    return lr
+    return gs_best
