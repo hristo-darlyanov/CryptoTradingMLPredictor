@@ -59,9 +59,6 @@ def trained_VotingClassifier(lr_model, knn_model, rfc_model, X_train, X_test, Y_
     vc = VotingClassifier(estimators=estimators, voting='hard')
     vc.fit(X_train, Y_train)
 
-    yhat = vc.predict(X_test)
-
-    print(classification_report(Y_test, yhat))
     metrics.ConfusionMatrixDisplay.from_estimator(vc, X_test, Y_test)
 
     return vc
