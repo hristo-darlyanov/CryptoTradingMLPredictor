@@ -38,7 +38,7 @@ def trained_LogisticRegression(X_train, X_test, Y_train, Y_test):
 
 def trained_RandomForestClassifier(X_train, X_test, Y_train, Y_test):
     rfc = RandomForestClassifier()
-    rfc_params = {'n_estimators': np.arange(100, 200, 10)}
+    rfc_params = {'n_estimators': np.arange(100, 200, 10), 'max_depth': np.arange(1,20)}
     gs = GridSearchCV(rfc, rfc_params, cv=5)
     gs.fit(X_train, Y_train)
     gs_best = gs.best_estimator_
