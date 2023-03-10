@@ -17,6 +17,13 @@ def getTickerIndicatorData(ohlc_df, indicators, dropna = False):
             ind_data = ind_data.to_frame()
         ohlc_df = ohlc_df.merge(ind_data, left_index=True, right_index=True)
         ohlc_df.rename(columns={"14 period EMV.": '14 period EMV'}, inplace=True)
+
+    ohlc_df['ema50'] = ohlc_df['close'] / ohlc_df['close'].ewm(50).mean()
+    ohlc_df['ema21'] = ohlc_df['close'] / ohlc_df['close'].ewm(21).mean()
+    ohlc_df['ema15'] = ohlc_df['close'] / ohlc_df['close'].ewm(14).mean()
+    ohlc_df['ema5'] = ohlc_df['close'] / ohlc_df['close'].ewm(5).mean()
+    ohlc_df['normVol'] = ohlc_df['volume'] / ohlc_df['volume'].ewm(5).mean()
+        
     if dropna == False:   
         return ohlc_df
     else:
@@ -34,3 +41,6 @@ def produce_prediction(df, window, dropna = False, removeohl = False):
         return df
     else:
         return df.dropna()
+    
+def exponential_smooth(data, alpha):
+    return data.ewm(alpha=alpha).mean()
