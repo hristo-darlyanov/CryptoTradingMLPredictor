@@ -27,7 +27,7 @@ def trained_KNN(X_train, X_test, Y_train, Y_test):
     return gs_best
 
 def trained_LogisticRegression(X_train, X_test, Y_train, Y_test):
-    lr = LogisticRegression()
+    lr = LogisticRegression(class_weight={0:1, 1:1.2})
     lr_params = {'C' : np.arange(0.1, 1, 0.1), 'solver' : ['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga']}
     gs = GridSearchCV(lr, lr_params, cv=5)
     gs.fit(X_train, Y_train)
