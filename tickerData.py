@@ -42,5 +42,18 @@ def produce_prediction(df, window, dropna = False, removeohl = False):
     else:
         return df.dropna()
     
+def produce_price_prediction(df, window, dropna = False, removeohl = False):  
+    prediction = df.shift(-window)['close']
+    prediction = prediction.iloc[:-window]
+    df['pred'] = prediction.astype(float)
+
+    if removeohl == True:
+        df.drop(columns={'open', 'high', 'low'}, inplace=True)
+
+    if dropna == False:   
+        return df
+    else:
+        return df.dropna()
+    
 def exponential_smooth(data, alpha):
     return data.ewm(alpha=alpha).mean()

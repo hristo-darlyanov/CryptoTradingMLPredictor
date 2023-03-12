@@ -1,12 +1,24 @@
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, r2_score, mean_squared_error
 from sklearn import metrics
 from sklearn.feature_selection import RFECV
 import numpy as np
 import matplotlib.pyplot as plt
+
+def trained_LinearRegression(X_train, X_test, Y_train, Y_test):
+    lr = LinearRegression()
+    lr.fit(X_train, Y_train)
+
+    yhat = lr.predict(X_test)
+
+    print("LR TEST SET -", r2_score(Y_test, yhat))
+    print("LR MSE -", mean_squared_error(Y_test, yhat))
+
+    return lr
+
 
 def trained_KNN(X_train, X_test, Y_train, Y_test):
     knn = KNeighborsClassifier()
@@ -81,4 +93,3 @@ def trained_VotingClassifier(lr_model, knn_model, X_train, X_test, Y_train, Y_te
     metrics.ConfusionMatrixDisplay.from_estimator(vc, X_test, Y_test)
 
     return vc
-    
