@@ -2,7 +2,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, r2_score, mean_squared_error
+from sklearn.metrics import classification_report, accuracy_score, r2_score, mean_squared_error
 from sklearn import metrics
 from sklearn.feature_selection import RFECV
 import numpy as np
