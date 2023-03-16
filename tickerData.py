@@ -30,7 +30,7 @@ def getTickerIndicatorData(ohlc_df, indicators, dropna = False):
         return ohlc_df.dropna()
 
 def produce_prediction(df, window, dropna = False, removeohl = False):  
-    prediction = (df.shift(-window)['close'] >= df['close'])
+    prediction = (df.shift(-window)['close'] <= df['close'])
     prediction = prediction.iloc[:-window]
     df['pred'] = prediction.astype(int)
 
