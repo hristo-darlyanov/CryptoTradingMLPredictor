@@ -57,16 +57,18 @@ class DataSource:
         self.normalize = normalize
         self.data = self.load_data()
         self.preprocess_data()
-        self.min_values = self.data.min()
-        self.max_values = self.data.max()
+        self.min_values = self.data.min().values
+        self.max_values = self.data.max().values
         self.step = 0
         self.offset = None
 
     def load_data(self):
         log.info('loading data for {}...'.format(self.ticker))
         df = getTickerData(ticker="btc-usd", period="max", interval="1d")
-        df.drop(columns={'Adj Close', 'Date'}, inplace=True)
-        df.rename(columns={'Open':'open', 'High':'high','Low':'low', 'Close':'close', 'Volume':'volume'}, inplace=True)
+        df.drop(columns={'Adj Close', 'Date', 'Open'}, inplace=True)
+        df.rename(columns={'High':'high','Low':'low', 'Close':'close', 'Volume':'volume'}, inplace=True)
+        df = df[['close', 'volume', 'low', 'high']]
+        df = df.astype(np.float64)
         return df
 
     def preprocess_data(self):
