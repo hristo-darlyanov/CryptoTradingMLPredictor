@@ -64,7 +64,7 @@ class DataSource:
 
     def load_data(self):
         log.info('loading data for {}...'.format(self.ticker))
-        df = getTickerData(ticker="btc-usd", period="max", interval="1d")
+        df = getTickerData(ticker=self.ticker, period="max", interval="1d")
         df.drop(columns={'Adj Close', 'Date', 'Open'}, inplace=True)
         df.rename(columns={'High':'high','Low':'low', 'Close':'close', 'Volume':'volume'}, inplace=True)
         df = df[['close', 'volume', 'low', 'high']]
